@@ -11,7 +11,7 @@ vim.opt.mousescroll = "ver:1,hor:6"
 
 -- line/tab behaviors
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 vim.opt.wrap = false
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
@@ -20,6 +20,17 @@ vim.opt.textwidth = 88
 vim.opt.colorcolumn = { 88, 100 }
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes" -- prevent gutter changing width
+
+-- whitespace visualization
+vim.opt.listchars = {
+	tab = "→ ",
+	space = "·",
+	trail = "•",
+	extends = "⟩",
+	precedes = "⟨",
+	nbsp = "␣",
+}
+vim.keymap.set("n", "<leader>l", ":set list!<CR>", { desc = "toggle whitespace characters" })
 
 -- disable tree sitter indenting and just use something local context aware
 vim.opt.autoindent = true

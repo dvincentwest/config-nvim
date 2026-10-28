@@ -26,10 +26,10 @@ local on_attach = function(client, bufnr)
 	keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 
 	-- Diagnostics  -- I think these might already be set
-	-- keymap("n", "gl", vim.diagnostic.open_float, opts)
-	-- keymap("n", "[d", vim.diagnostic.goto_prev, opts)
-	-- keymap("n", "]d", vim.diagnostic.goto_next, opts)
-	-- keymap("n", "<leader>q", vim.diagnostic.setloclist, opts)
+	keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
+	keymap("n", "[d", function() vim.diagnostic.jump({count = -1}) end, opts)
+	keymap("n", "]d", function() vim.diagnostic.jump({count =  1}) end, opts)
+	keymap("n", "<leader>q", vim.diagnostic.setqflist, opts)
 
 	-- Formatting - Disabled in favor of conform.nvim
 	-- keymap("n", "<leader>cf", function()

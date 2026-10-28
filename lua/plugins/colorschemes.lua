@@ -15,9 +15,9 @@ return {
         priority = 1000, -- make sure it loads before other start plugins
         config = function()
             -- vim.cmd.colorscheme("terafox")
-            -- vim.cmd.colorscheme("nightfox")
+            vim.cmd.colorscheme("nightfox")
             -- vim.cmd.colorscheme("dayfox")
-            vim.cmd.colorscheme("nordfox")
+            -- vim.cmd.colorscheme("nordfox")
         end,
     },
     {
