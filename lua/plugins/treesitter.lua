@@ -10,7 +10,7 @@ return {
       require("nvim-treesitter").install {
         "bash", "c", "cpp", "lua", "vim", "vimdoc", "query",
         "python", "javascript", "typescript", "html", "css", "json",
-        "markdown", "markdown_inline",
+        "markdown", "markdown_inline", "fennel",
       }
 
       -- Enable treesitter highlighting per filetype (new main branch API)
@@ -18,9 +18,10 @@ return {
         pattern = {
           "bash", "sh", "c", "cpp", "lua", "vim", "help", "query",
           "python", "javascript", "typescript", "html", "css", "json",
-          "markdown",
+          "markdown", "fennel",
         },
-        callback = function() vim.treesitter.start() end,
+        -- pcall: a parser that has not been installed yet should not stop the file from opening
+        callback = function() pcall(vim.treesitter.start) end,
       })
     end,
   },

@@ -48,17 +48,28 @@ return {
 		-- Lua
 		vim.lsp.config("lua_ls", {
 			on_attach = on_attach,
-			settings = {
-				Lua = {
+            -- Neovim's runtime is only the right library for Neovim config. A project with its own
+            -- .luarc.json declares its own runtime and globals, so leave it alone.
+			on_init = function(client)
+				local folder = client.workspace_folders and client.workspace_folders[1]
+				if folder and (vim.uv.fs_stat(folder.name .. "/.luarc.json") or vim.uv.fs_stat(folder.name .. "/.luarc.jsonc")) then
+					return
+				end
+				client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
 					diagnostics = { globals = { "vim" } },
 					workspace = {
 						library = vim.api.nvim_get_runtime_file("", true),
 						checkThirdParty = false,
 					},
-				},
-			},
+				})
+			end,
+			settings = { Lua = {} },
 		})
 		vim.lsp.enable("lua_ls")
+
+		-- Fennel (configured per project by flsproject.fnl)
+		vim.lsp.config("fennel_ls", { on_attach = on_attach })
+		vim.lsp.enable("fennel_ls")
 
 		-- Python
 
