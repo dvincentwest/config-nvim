@@ -1,5 +1,14 @@
+-- must be set before lazy.nvim loads so that plugin mappings pick them up
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
 -- the following yanks everything always to the clipboard
 -- vim.opt.clipboard = "unnamedplus"
+
+-- :terminal defaults to cmd.exe on windows
+if vim.fn.has("win32") == 1 then
+	vim.o.shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
+end
 
 vim.opt.virtualedit = "block"
 vim.opt.termguicolors = true
@@ -47,7 +56,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		-- these remove the behavior that comments are automatically continued on
 		-- the next line when inserting a newline either from insert or normal modes
 		vim.opt.formatoptions:remove({ "t", "o", "r", "c" })
-		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
 })
 
@@ -62,8 +70,6 @@ vim.opt.ignorecase = true
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
-
--- vim.g.mapleader = " " -- setup by lazy.ngim
 
 -- Setup Diagnostics
 vim.diagnostic.config({
@@ -83,8 +89,9 @@ vim.keymap.set(
 -- Trim trailing whitespace and make exactly one newline
 local function trim_whitespace_and_trailing_newlines()
 	local save_cursor = vim.fn.getpos(".")
-	-- Remove all trailing whitespace
-	vim.cmd([[%s/\s\+$//e]])
+	-- Remove all trailing whitespace. [ \t] and not \s, so a stray \r from a CRLF file
+	-- read as unix format is never stripped
+	vim.cmd([[%s/[ \t]\+$//e]])
 	-- Remove all trailing newlines
 	vim.cmd([[%s/\n\+\%$//e]])
 	-- VIM will automatically add a trailing newline when saving the file

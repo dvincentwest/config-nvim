@@ -23,6 +23,14 @@ return {
         -- pcall: a parser that has not been installed yet should not stop the file from opening
         callback = function() pcall(vim.treesitter.start) end,
       })
+
+      -- indent with treesitter for these (the global indent engine is turned off in options.lua)
+      vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = { "*.c", "*.cpp", "*lua", "*.py" },
+        callback = function()
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
     end,
   },
 

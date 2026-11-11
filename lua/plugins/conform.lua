@@ -1,5 +1,6 @@
 return {
     "stevearc/conform.nvim",
+    enabled = vim.fn.has("win32") == 0, -- the formatters aren't installed on windows
     version = "*",
     config = function()
         local conform = require("conform")

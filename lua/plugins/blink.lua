@@ -1,5 +1,6 @@
 return {
   'saghen/blink.cmp',
+  enabled = vim.fn.has("win32") == 0, -- only worth it with language servers
   -- optional: provides snippets for the snippet source
   dependencies = { 'rafamadriz/friendly-snippets' },
 

@@ -39,6 +39,7 @@ end
 
 return {
 	"neovim/nvim-lspconfig",
+	enabled = vim.fn.has("win32") == 0, -- no language servers on the windows workstation
 	version = "*",
 	config = function()
 		-- C++
