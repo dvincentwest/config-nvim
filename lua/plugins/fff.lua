@@ -1,6 +1,7 @@
 -- Package name changed from `fff.nvim` to `fff`. If you installed fff.nvim before, clean with `:Lazy clean`
 return {
   'dmtrKovalenko/fff',
+  enabled = vim.fn.has("win32") == 0, -- can't build it without rust; telescope + ripgrep instead
   build = function()
     -- downloads a prebuilt binary or falls back to cargo build
     require("fff.download").download_or_build_binary()

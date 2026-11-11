@@ -9,5 +9,12 @@ return {
           vim.keymap.set('n', '<leader>fc', builtin.commands, { desc = 'Telescope find commands' })
           -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
           vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, { desc = 'Telescope find lsp symbols' })
+
+          -- fff provides these elsewhere; on windows it's disabled, so use ripgrep via telescope
+          if vim.fn.has("win32") == 1 then
+              vim.keymap.set('n', 'ff', builtin.find_files, { desc = 'Telescope find files' })
+              vim.keymap.set('n', 'fg', builtin.live_grep, { desc = 'Telescope live grep' })
+              vim.keymap.set({ 'n', 'x' }, 'fw', builtin.grep_string, { desc = 'Search current word / selection' })
+          end
       end
     }
