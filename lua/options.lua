@@ -66,9 +66,13 @@ vim.opt.inccommand = "split"
 -- ignore type case when doing autocomplete for options and things
 vim.opt.ignorecase = true
 
--- Use tree-sitter for folding
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- Use tree-sitter for folding (windows has no parsers, so fold by indent there)
+if vim.fn.has("win32") == 1 then
+	vim.opt.foldmethod = "indent"
+else
+	vim.opt.foldmethod = "expr"
+	vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+end
 vim.opt.foldlevel = 99
 
 -- Setup Diagnostics

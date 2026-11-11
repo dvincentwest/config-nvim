@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    enabled = vim.fn.has("win32") == 0, -- can't build parsers on the windows workstation
     branch = "main",
     build = ":TSUpdate",
     lazy = false,
@@ -37,6 +38,7 @@ return {
   -- ── Textobjects ──────────────────────────────────────────────────────────
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    enabled = vim.fn.has("win32") == 0,
     branch = "main",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     init = function()
